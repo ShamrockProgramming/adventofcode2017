@@ -1,4 +1,4 @@
-let number = 277678;
+let number = 368078;
 let level=1;
 while(level*level < number){
     level+=2;
