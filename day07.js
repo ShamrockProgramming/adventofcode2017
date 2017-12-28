@@ -81,5 +81,43 @@ for(let n=0;n<nodes.length;n++){
     if(!seen){
         console.log(nodes[n].name+ " was not seen in the list of children");
         console.log("its index in the nodes array was "+n);
+        console.log(nodes[n].children);
+    }
+}
+
+console.log("====== PART 2 ======");
+let root = 21;
+let checks = 0;
+while(nodes[root].children.length > 0){
+    let len = nodes[root].children.length;
+    let childweights = new Array(len);
+
+    let children = nodes[root].children;
+    let childIndex = new Array(len);
+
+    //stores child indexes in an array
+    for(let n=0;n<nodes.length;n++){
+        for(let c=0;c<len;c++){
+            if(nodes[n].name ===children[c]){
+                childIndex[c] = n;
+            }
+        }
+    }
+
+    //stores child weights in an array
+    for(let c=0;c<len;c++){
+        childweights[c] = nodes[childIndex[c]].weight;
+        //console.log(childweights[c]);
+        
+    }
+
+    checks++;
+    if(checks >0){
+        console.log("Test");
+        break;
+    }
+    if(checks >10){
+        console.log("Break too high");
+        break;
     }
 }
