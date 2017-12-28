@@ -45,6 +45,7 @@ function inStateLog(){
         }
         seen = seen || all;
         if(seen){
+            console.log("The states index is = "+s);
             break;
         }
     }
