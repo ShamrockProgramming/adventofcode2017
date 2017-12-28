@@ -5,6 +5,11 @@ let states = [];
 
 
 function distribute(mem,ind){
+    let oldmem = new Array();
+    for(let m=0;m<16;m++){
+        oldmem[m] = mem[m];
+    }
+    states.push(oldmem);
     let stuff = mem[ind];
     //console.log("initial stuff "+stuff);
     mem[ind] = 0;
@@ -23,14 +28,14 @@ function distribute(mem,ind){
 }
 
 function inStateLog(){
-    if(states.length == 0){
+    /*if(states.length == 0){
         console.log("Initial run!");
         return false;
-    }
+    }*/
     let seen = false;
     for(let s=0;s<states.length;s++){
         let all = true;
-        console.log("states["+s+"] = "+states[s]);
+        //console.log("states["+s+"] = "+states[s]);
         let temp = states[s];
         for(let m=0;m<16;m++){
             if(temp[m] != memory[m]){
@@ -51,11 +56,13 @@ while(!inStateLog()){
     let max = Math.max(...memory);
     let maxindex = memory.indexOf(max);
 
-    console.log(memory);
-    states.push(memory);
+
+    //console.log("before distribute, mem is "+memory);
     distribute(memory,maxindex);
+    console.log("after distribute, mem is "+memory);
+
     cycles++;
-    if(cycles>1000000){
+    if(cycles>100000){
         console.log("BREAK HIT LIMIT");
         break;
     }
