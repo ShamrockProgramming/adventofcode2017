@@ -48,7 +48,7 @@ function inStateLog(){
             break;
         }
     }
-    console.log("seen is "+seen);
+    //console.log("seen is "+seen);
     return seen;
 }
 
@@ -59,7 +59,7 @@ while(!inStateLog()){
 
     //console.log("before distribute, mem is "+memory);
     distribute(memory,maxindex);
-    console.log("after distribute, mem is "+memory);
+    //console.log("after distribute, mem is "+memory);
 
     cycles++;
     if(cycles>100000){
