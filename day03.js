@@ -1,3 +1,4 @@
+function part1(){
 let number = 368078;
 let level=1;
 while(level*level < number){
@@ -41,3 +42,51 @@ else{
     }
     console.log("It will take "+totalsteps+" Manhattan steps");
 }
+}
+part1();
+
+function part2(){
+    let number = 368078;
+    let directionlist = new Array();
+
+    let len = 25;
+    let matrix = new Array(len);
+    for(let a=0;a<len;a++){
+        matrix[a] = new Array(len);
+        matrix[a].fill(0);
+    }
+    let mid = (len+1)/2;
+    matrix[mid][mid] = 1;
+    //console.log("The mid mid is "+ matrix[mid]);
+
+    let directions  = new Map();
+    directions.set("R","U");
+    directions.set("U","L");
+    directions.set("L","D");
+    directions.set("D","R");
+    //console.log(directions);
+
+
+    let inc =1;
+    let current = "R";
+    let count = 0;
+
+    while(count < 2*(len+1)){
+        let temp = inc;
+        while(temp>0){
+            directionlist.push(current);
+            temp--;
+        }
+        current = directions.get(current);
+        temp = inc;
+        while(temp>0){
+            directionlist.push(current);
+            temp--;
+        }
+        inc++;
+        current = directions.get(current);
+        count+=2;
+    }
+    console.log(directionlist);
+}
+part2();
