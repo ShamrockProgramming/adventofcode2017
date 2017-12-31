@@ -49,7 +49,7 @@ function part2(){
     let number = 368078;
     let directionlist = new Array();
 
-    let len = 25;
+    let len = 55;
     let matrix = new Array(len);
     for(let a=0;a<len;a++){
         matrix[a] = new Array(len);
@@ -87,6 +87,55 @@ function part2(){
         current = directions.get(current);
         count+=2;
     }
-    console.log(directionlist);
+    //console.log(directionlist);
+
+    function matrixValue(dir,mtrx,x,y){
+        if(dir == "R"){
+            return mtrx[x][y]+mtrx[x][y+1]+mtrx[x][y-1]+
+                    mtrx[x+1][y]+mtrx[x+1][y+1]+mtrx[x+1][y-1];
+        }
+        else if(dir == "U"){
+            return mtrx[x][y]+mtrx[x-1][y]+mtrx[x+1][y]+
+                    mtrx[x-1][y-1]+mtrx[x][y-1]+mtrx[x+1][y-1];
+        }
+        else if(dir == "L"){
+            return mtrx[x][y]+mtrx[x][y+1]+mtrx[x][y-1]+
+                    mtrx[x-1][y]+mtrx[x-1][y+1]+mtrx[x-1][y-1];
+        }
+        else if(dir == "D"){
+            return mtrx[x][y]+mtrx[x-1][y]+mtrx[x+1][y]+
+                    mtrx[x][y+1]+mtrx[x-1][y+1]+mtrx[x+1][y+1];
+        }
+    }
+
+    let value = matrix[mid][mid];
+    let pos = 0;
+    let x = mid;
+    let y = mid;
+    while(value <= number){
+        let temp = matrixValue(directionlist[pos],matrix,x,y);
+        matrix[x][y] = temp;
+        value = temp;
+        console.log(temp);
+        if(value > number){
+            break;
+        }
+
+        if(directionlist[pos] == "R"){
+            x++;
+        }
+        else if(directionlist[pos] == "U"){
+            y--;
+        }
+        else if(directionlist[pos] == "L"){
+            x--;
+        }
+        else if(directionlist[pos] == "D"){
+            y++;
+        }
+        pos++;
+    }
+    console.log("The matrix has stopped...");
+    console.log("The number which exceeded was "+matrix[x][y]);
 }
 part2();
