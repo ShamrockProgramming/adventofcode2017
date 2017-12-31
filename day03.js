@@ -89,31 +89,27 @@ function part2(){
     }
     //console.log(directionlist);
 
-    function matrixValue(dir,mtrx,x,y){
-        if(dir == "R"){
-            return mtrx[x][y]+mtrx[x][y+1]+mtrx[x][y-1]+
-                    mtrx[x+1][y]+mtrx[x+1][y+1]+mtrx[x+1][y-1];
-        }
-        else if(dir == "U"){
-            return mtrx[x][y]+mtrx[x-1][y]+mtrx[x+1][y]+
-                    mtrx[x-1][y-1]+mtrx[x][y-1]+mtrx[x+1][y-1];
-        }
-        else if(dir == "L"){
-            return mtrx[x][y]+mtrx[x][y+1]+mtrx[x][y-1]+
-                    mtrx[x-1][y]+mtrx[x-1][y+1]+mtrx[x-1][y-1];
-        }
-        else if(dir == "D"){
-            return mtrx[x][y]+mtrx[x-1][y]+mtrx[x+1][y]+
-                    mtrx[x][y+1]+mtrx[x-1][y+1]+mtrx[x+1][y+1];
-        }
+    function matrixValue(mtrx,x,y){
+
+        let c = mtrx[x][y];
+        let l = mtrx[x][y-1];
+        let r = mtrx[x][y+1];
+        let u = mtrx[x-1][y];
+        let d = mtrx[x+1][y];
+        let ur = mtrx[x-1][y+1];
+        let ul = mtrx[x-1][y-1];
+        let dr = mtrx[x+1][y+1];
+        let dl = mtrx[x+1][y-1];
+
+        return c+l+r+u+d+ur+ul+dr+dl;
     }
 
     let value = matrix[mid][mid];
     let pos = 0;
     let x = mid;
     let y = mid;
-    while(value <= number){
-        let temp = matrixValue(directionlist[pos],matrix,x,y);
+    while(pos <len*len){
+        let temp = matrixValue(matrix,x,y);
         matrix[x][y] = temp;
         value = temp;
         console.log(temp);
@@ -122,16 +118,16 @@ function part2(){
         }
 
         if(directionlist[pos] == "R"){
-            x++;
+            y++;
         }
         else if(directionlist[pos] == "U"){
-            y--;
-        }
-        else if(directionlist[pos] == "L"){
             x--;
         }
+        else if(directionlist[pos] == "L"){
+            y--;
+        }
         else if(directionlist[pos] == "D"){
-            y++;
+            x++;
         }
         pos++;
     }
