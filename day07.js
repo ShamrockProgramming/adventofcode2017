@@ -23,7 +23,7 @@ function processNode(line){
         this.children = [];
     }
     else{
-        this.children = this.children = clist.split(", ");
+        this.children = clist.split(", ");
     }
 
 }
@@ -37,6 +37,7 @@ for(let n=0;n<lines.length-1;n++){
 
 
 //sort nodes by length of children array
+/*
 for(let a=0;a<nodes.length;a++){
     for(let b=a+1;b<nodes.length;b++){
         if(nodes[a].children.length < nodes[b].children.length){
@@ -47,6 +48,7 @@ for(let a=0;a<nodes.length;a++){
         }
     }
 }
+*/
 /*
 console.log(nodes[0]);
 console.log(nodes[10]);
@@ -56,6 +58,7 @@ console.log(nodes[500]);
 console.log(nodes[1000]);
 */
 
+//Makes a redundant list of children names.
 let childrenlist = [];
 for(let c=0;c<nodes.length;c++){
     let clen = nodes[c].children.length;
@@ -69,7 +72,7 @@ for(let c=0;c<nodes.length;c++){
     }
 }
 
-//search childrenlist for the absence of the name
+//search childrenlist for the absence of the name: that one must be the root.
 for(let n=0;n<nodes.length;n++){
     let seen = false;
     for(let c=0;c<childrenlist.length;c++){
@@ -85,6 +88,7 @@ for(let n=0;n<nodes.length;n++){
     }
 }
 
+/*
 console.log("====== PART 2 ======");
 let root = 21;
 let checks = 0;
@@ -108,7 +112,7 @@ while(nodes[root].children.length > 0){
     for(let c=0;c<len;c++){
         childweights[c] = nodes[childIndex[c]].weight;
         //console.log(childweights[c]);
-        
+
     }
 
     checks++;
@@ -121,3 +125,72 @@ while(nodes[root].children.length > 0){
         break;
     }
 }
+*/
+
+function Tree(n){
+    //same
+    this.name = n.name;
+    this.weight = n.weight;
+    //search nodes list for processnodes
+    this.childrenIndexes = [];
+    for(let m=0;m<n.children.length;m++){
+        for(let a=0;a<nodes.length;a++){
+            if(nodes[a].name == n.children[m]){
+                this.childrenIndexes.push(a);
+            }
+        }
+    }
+    this.print = function(){
+        console.log("Your children have indexes ["+this.childrenIndexes+"]");
+    }
+
+
+    this.branches = [];
+    for(let c=0;c<this.childrenIndexes.length;c++){
+        this.branches.push(new Tree(nodes[this.childrenIndexes[c]]));
+    }
+
+
+    this.buildTree = function(){
+        if(this.childrenIndexes.length >0){
+            for(let c=0;c<this.childrenIndexes.length;c++){
+                this.branches[c].buildTree();
+            }
+        }
+        else{
+
+        }
+    }
+
+    /*
+    this.branch = function(){
+        if(this.childrenIndexes.length != 0){
+            for(let c=0;c<this.childrenIndexes.length;c++){
+                let child = nodes[this.childrenIndexes[c]];
+                //console.log(child);
+                let leaf = new Tree(child);
+                //console.log(leaf);
+                if(leaf.childrenIndexes.length == 0){
+                    console.log("branch "+c+" has weight "+child.weight);
+                }
+                else{
+                    let temp = child.weight;
+                    for(let t=0;t<leaf.childrenIndexes.length;t++){
+                        console.log("----"+nodes[leaf.childrenIndexes[t]].weight);
+                        temp += nodes[leaf.childrenIndexes[t]].weight;
+                    }
+                    console.log("branch "+c+" has weight "+temp);
+                }
+            }
+        }
+        else{
+            console.log("branch has weight "+this.weight);
+        }
+    }
+    */
+}
+let root = new Tree(nodes[150]);
+root.print();
+
+root.buildTree();
+console.log(root.branches);
